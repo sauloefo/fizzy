@@ -6,12 +6,12 @@ module Filter::Fields
   delegate :default_value?, to: :class
 
   class_methods do
-    def default_fields
+    def default_values
       { indexed_by: "most_active" }
     end
 
     def default_value?(key, value)
-      default_fields[key.to_sym].eql?(value)
+      default_values[key.to_sym].eql?(value)
     end
   end
 
@@ -32,7 +32,7 @@ module Filter::Fields
   end
 
   def default_indexed_by
-    self.class.default_fields[:indexed_by]
+    self.class.default_values[:indexed_by]
   end
 
   def default_indexed_by?
