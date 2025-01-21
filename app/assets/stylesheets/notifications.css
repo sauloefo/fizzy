@@ -116,3 +116,21 @@
     display: none;
   }
 }
+
+.notification__unread_indicator {
+  --size: 0.8em;
+
+  padding-block-start: var(--size);
+
+  .dot {
+    aspect-ratio: 1;
+    background-color: var(--color-marker);
+    border-radius: 50%;
+    block-size: var(--size);
+    inline-size: var(--size);
+  }
+
+  .notificiations-list--read & {
+    display: none;
+  }
+}
