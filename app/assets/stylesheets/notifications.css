@@ -96,6 +96,10 @@
 .notification__content {
   color: var(--color-ink);
 
+  @media (prefers-color-scheme: dark) {
+    border: 1px solid var(--color-subtle-dark);
+  }
+
   .notificiations-list--read & {
     border: 1px solid var(--color-subtle);
     box-shadow: none;
