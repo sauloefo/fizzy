@@ -15,12 +15,10 @@
         <%= link_to "Projects", root_path %>
         <%= link_to "Activity", events_path %>
       </div>
-      <h1 class="txt-large txt-align-center min-width flex align-center gap-half">
+      <h1 class="txt-large txt-align-center min-width flex align-center gap-half margin-block-end">
         <span class="overflow-ellipsis">
           <%= link_to @bucket.name, bubbles_path(bucket_ids: [ @bucket ]) %>
         </span>
-        <span class="flex-item-no-shrink">▸</span>
-        <strong class="overflow-ellipsis"><%= @page_title %></strong>
       </h1>
     </header>
   </nav>
