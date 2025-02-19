@@ -64,8 +64,10 @@
 }
 
 .bubble__bubble {
-  background-color: var(--color-bg);
-  border: var(--bubble-border-width) solid var(--bubble-color);
+  --bubble-border-width: 0.15em;
+
+  background: var(--color-bg);
+  border: var(--bubble-border-width) solid var(--bubble-background, color(from var(--bubble-color) srgb r g b / 0.25));
   border-radius: var(--bubble-shape);
   position: absolute;
   z-index: -1;
@@ -173,7 +175,7 @@
 
   &.bubble__comments {
     --arrow-size: 1.5em;
-    --border-color: var(--bubble-color);
+    --border-color: var(--bubble-background, color(from var(--bubble-color) srgb r g b / 0.25));
     --border-size: var(--bubble-border-width);
 
     aspect-ratio: 9/6;
@@ -189,8 +191,8 @@
       content: "";
       display: block;
       inset-block-end: auto;
-      inset-block-start: 96%;
-      inset-inline-start: 68%;
+      inset-block-start: 94%;
+      inset-inline-start: 66%;
       position: absolute;
       transform: translateX(-50%) rotate(-20deg);
     }
@@ -203,8 +205,8 @@
       content: "";
       display: block;
       inset-block-end: auto;
-      inset-block-start: calc(96% - var(--border-size) * 1.5);
-      inset-inline-start: 65%;
+      inset-block-start: calc(94% - var(--border-size) * 1.5);
+      inset-inline-start: 64%;
       position: absolute;
       transform: translateX(-50%) rotate(-20deg);
     }
@@ -517,12 +519,12 @@
 }
 
 .bubble__shape {
-  background: var(--bubble-background, color(from var(--bubble-color) srgb r g b / 0.15));
+  background: radial-gradient(circle at center, color(from var(--bubble-color) srgb r g b / 0.3), transparent);
   block-size: var(--bubble-size, 1.2em);
   border-color: var(--bubble-border-color, var(--bubble-color));
   border-radius: var(--bubble-shape);
   border-style: var(--bubble-border-style, solid);
-  border-width: var(--bubble-border-width);
+  border-width: 0;
   inline-size: var(--bubble-size, 1.2em);
   pointer-events: none;
   position: relative;
@@ -538,11 +540,6 @@
     --bubble-border-style: dashed;
   }
 
-  .popped & {
-    --bubble-background: radial-gradient(circle at center, color(from var(--bubble-color) srgb r g b / 0.3), transparent);
-    --bubble-border-width: 0;
-  }
-
   .bubble:has(.bubble__link) & {
     z-index: -1;
   }
@@ -555,11 +552,22 @@
     animation-name: wobble-alt;
     animation-duration: 900ms;
   }
+
+  .popped & {
+    display: none;
+  }
+
+  .bucket &,
+  .bubbles-list & {
+    background: color-mix(in srgb, var(--bubble-color) 15%, var(--color-bg));
+  }
 }
 
 .bubble__actions-container {
-  background-color: color(from var(--bubble-color) srgb r g b / 0.15);
+  background-color: color-mix(in srgb, var(--bubble-color) 15%, var(--color-bg));
   margin-block-start: -0.7em;
+  position: relative;
+  z-index: 1;
 
   .btn {
     --btn-background: var(--bubble-color);
@@ -574,5 +582,19 @@
 
   .bubble__pop-message {
     color: var(--bubble-color);
+  }
+}
+
+.splat__svg {
+  display: none;
+  pointer-events: none;
+
+  .popped & {
+    display: block;
+    fill: color-mix(in srgb, var(--bubble-color) 15%, var(--color-bg));
+    position: absolute;
+    scale: 120%;
+    transform: rotate(var(--rotation));
+    z-index: -1;
   }
 }
