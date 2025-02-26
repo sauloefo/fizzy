@@ -17,7 +17,7 @@ class Buckets::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     buckets(:writebook).subscribe(users(:jz))
 
     assert_changes -> { buckets(:writebook).subscribed_by?(users(:jz)) }, from: true, to: false do
-      put bucket_subscriptions_url(buckets(:writebook)), params: { subscribed: "0" }
+      put bucket_subscriptions_url(buckets(:writebook))
     end
 
     assert_response :success

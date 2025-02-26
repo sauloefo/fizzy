@@ -2,7 +2,7 @@ class Buckets::SubscriptionsController < ApplicationController
   include BucketScoped
 
   def update
-    if params[:subscribed] == "1"
+    if params[:subscribed]
       @bucket.subscribe(Current.user)
     else
       @bucket.unsubscribe(Current.user)
