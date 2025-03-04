@@ -2,6 +2,8 @@ class RemoveAbandonedCreationsJob < ApplicationJob
   queue_as :default
 
   def perform
-    Bubble.remove_abandoned_creations
+    ApplicationRecord.with_each_tenant do |tenant|
+      Bubble.remove_abandoned_creations
+    end
   end
 end
