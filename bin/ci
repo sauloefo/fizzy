@@ -1,12 +1,6 @@
 #!/usr/bin/env ruby
-
 require_relative "../config/boot"
 require "active_support/continuous_integration"
 
-ActiveSupport::ContinuousIntegration.run do
-  step "Security: Ruby", "bin/brakeman -q"
-  step "Security: JS", "bin/importmap audit"
-  step "Style: Ruby", "bin/rubocop"
-  step "Test: Unit", "bin/rails test"
-  # step "Test: System", "bin/rails test:system"
-end
+CI = ActiveSupport::ContinuousIntegration
+require_relative "../config/ci.rb"
