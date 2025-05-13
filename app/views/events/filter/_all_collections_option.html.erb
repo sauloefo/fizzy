@@ -6,21 +6,18 @@
     <% end %>
   <% end %>
 <% elsif Current.user.collections.many? %>
-  <div class="popup__group flex align-center" style="--hover-size: 0">
-  <div class="btn txt-xx-small flex-item-no-shrink">
-    <%= link_to events_path(clear_filter: true), style: "--hover-size: 0" do %>
+  <div class="popup__group flex align-center">
+    <%= link_to events_path(clear_filter: true), class: "btn txt-xx-small flex-item-no-shrink" do %>
       <%= check_box_tag "filter_collections", nil, filter.collections.blank?, class: "form-checkbox" %>
+      <span class="for-screen-reader">
+        See everything in all collections
+      </span>
+      <%= icon_tag "check", size: 18, class: "checked" %>
     <% end %>
 
-    <span class="for-screen-reader">
-      See everything in all collections
-    </span>
-    <%= icon_tag "check", size: 18, class: "checked" %>
-  </div>
-
-  <%= link_to cards_path(filter.as_params.except(:collection_ids)), class: "btn popup__item min-width flex-item-grow" do %>
-    <span class="overflow-ellipsis">All collections</span>
-    <span class="txt-ink translucent flex-item-no-shrink flex-item-justify-end"><span class="txt-x-small txt-uppercase">GO TO</span> ›</span>
-  <% end %>
+    <%= link_to cards_path(filter.as_params.except(:collection_ids)), class: "btn popup__item min-width flex-item-grow" do %>
+      <span class="overflow-ellipsis">All collections</span>
+      <span class="txt-ink translucent flex-item-no-shrink flex-item-justify-end"><span class="txt-x-small txt-uppercase">GO TO</span> ›</span>
+    <% end %>
   </div>
 <% end %>

@@ -5,7 +5,7 @@
   <% end %>
 
   <% if Current.user.collections.one? %>
-    <%= link_to cards_path(filter.as_params.except(:collection_ids)), class: "popup__group flex align-center", style: "--hover-size: 0" do %>
+    <%= link_to cards_path(filter.as_params.except(:collection_ids)), class: "popup__group flex align-center" do %>
       <%= tag.div class: "btn popup__item min-width flex-item-grow" do %>
         <span class="overflow-ellipsis"><%= Current.user.collections.first.name %></span>
         <span class="txt-ink translucent flex-item-no-shrink flex-item-justify-end"><span class="txt-x-small txt-uppercase">GO TO</span> ›</span>
@@ -13,14 +13,14 @@
     <% end %>
   <% elsif Current.user.collections.many? %>
     <%= link_to cards_path(filter.as_params.except(:collection_ids)), class: "popup__group flex align-center", style: "--hover-size: 0" do %>
-      <div class="btn txt-xx-small flex-item-no-shrink">
+      <label class="btn txt-xx-small flex-item-no-shrink" style="--hover-size: 0.15rem">
         <input type="checkbox" <%= "checked" if filter.collection_ids.empty? %>>
 
         <span class="for-screen-reader">
           See everything in all collections
         </span>
         <%= icon_tag "check", size: 18, class: "checked" %>
-      </div>
+      </label>
       <%= tag.div class: "btn popup__item min-width flex-item-grow" do %>
         <span class="overflow-ellipsis">All collections</span>
         <span class="txt-ink translucent flex-item-no-shrink flex-item-justify-end"><span class="txt-x-small txt-uppercase">GO TO</span> ›</span>
@@ -29,7 +29,7 @@
 
     <% Current.user.collections.order(:name).each do |collection| %>
       <li class="popup__group flex align-center" data-value="<%= collection.name.downcase %>">
-        <div class="btn txt-xx-small flex-item-no-shrink">
+        <label class="btn txt-xx-small flex-item-no-shrink">
           <%= form.check_box "collection_ids[]", {
                 checked: filter.collections.include?(collection),
                 data: { action: "change->form#submit" },
@@ -40,7 +40,7 @@
             Toggle filter for <%= collection.name %>
           </span>
           <%= icon_tag "check", size: 18, class: "checked" %>
-        </div>
+        </label>
 
         <%= link_to cards_path(collection_ids: [ collection ]), class: "btn popup__item min-width flex-item-grow" do %>
           <span class="overflow-ellipsis"><%= collection.name %></span>

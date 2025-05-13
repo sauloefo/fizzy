@@ -1,5 +1,5 @@
 <li class="popup__group flex align-center" data-value="<%= collection.name.downcase %>">
-  <div class="btn txt-xx-small">
+  <label class="btn txt-xx-small">
     <%= form.check_box "collection_ids[]", {
           checked: filter.collections.include?(collection),
           data: { action: "change->form#submit" },
@@ -10,7 +10,7 @@
       Toggle filter for <%= collection.name %>
     </span>
     <%= icon_tag "check", size: 18, class: "checked flex-item-justify-end" %>
-  </div>
+  </label>
 
   <%= link_to cards_path(collection_ids: [ collection ]), class: "btn popup__item min-width flex-item-grow" do %>
     <span class="overflow-ellipsis"><%= collection.name %></span>

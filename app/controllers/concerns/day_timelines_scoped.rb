@@ -4,12 +4,19 @@ module DayTimelinesScoped
   included do
     include FilterScoped
 
+    before_action :normalize_collection_params
     before_action :restore_collections_filter_from_cookie
     before_action :set_day_timeline
     after_action :save_collections_filter_to_cookie
   end
 
   private
+    def normalize_collection_params
+      if params[:collection_ids].blank? && !params[:clear_filter]
+        params[:clear_filter] = true
+      end
+    end
+
     def restore_collections_filter_from_cookie
       if params[:clear_filter]
         delete_collections_filter_cookie
