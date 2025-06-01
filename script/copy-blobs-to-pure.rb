@@ -16,7 +16,10 @@ def migrate(source_service_name, target_service_name)
     target_service = ActiveStorage::Blob.services.fetch(target_service_name)
 
     ActiveStorage::Blob.find_each do |blob|
-      if target_service.exist?(blob.key)
+      if target_service.name.to_sym == blob.service_name.to_sym
+        report[:skipped] += 1
+        putc "-"
+      elsif target_service.exist?(blob.key)
         report[:skipped] += 1
         putc "S"
       else
@@ -31,7 +34,9 @@ def migrate(source_service_name, target_service_name)
           putc "E"
         end
       end
-      # blob.update_attribute :service_name, target_service_name
+
+      # Update the service name of the blob.
+      blob.update_column :service_name, target_service_name
     end
 
     puts

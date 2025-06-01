@@ -20,6 +20,7 @@ purestorage:
   access_key_id: <%= Rails.application.credentials.dig(:active_storage, :purestorage_service, :access_key_id) %>
   secret_access_key: <%= Rails.application.credentials.dig(:active_storage, :purestorage_service, :secret_access_key) %>
 
+# TODO: remove this after we update existing blobs' service names to purestorage.
 mirror:
   service: Mirror
   primary: purestorage
