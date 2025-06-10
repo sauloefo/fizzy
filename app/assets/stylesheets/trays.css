@@ -75,7 +75,7 @@
     z-index: calc(var(--z-tray) + 1);
 
     .icon {
-      color: var(--color-canvas);
+      color: var(--color-white);
       display: none;
     }
 
