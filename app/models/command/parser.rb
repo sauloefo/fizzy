@@ -70,7 +70,6 @@ class Command::Parser
     end
 
     def parse_gid(command_name)
-      Rails.logger.info "COMMAND NAME = #{command_name}"
       case record = GlobalID::Locator.locate(command_name)
       when Tag
         Command::FilterByTag.new(tag_title: record.title, params: filter.as_params)
