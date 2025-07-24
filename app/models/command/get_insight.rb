@@ -41,13 +41,13 @@ class Command::GetInsight < Command
         - If you need further details or clarifications, indicate it.
         - When referencing cards or comments, always link them (see rules below).
         - **NEVER** answer with cards that don't exist.
+        - Notice that the current card (this card) is provided when inside a card, in the section BEGIN OF CURRENT CARD
 
         ## Critical rules
 
         - Always assume that the user is querying about information in the system, not asking you to generate similar data.
         - Never include cards that don't exist in your answers.
-        - When asking for similar cards, tickets, bugs, etc., never imagine those, just analyze the data and suggest existing
-          cards that are similar.
+        - When asking for similar cards, tickets, bugs, etc., never imagine those. Only reference cards from the list of cards provided.
         - If you are missing cards or information, indicate it instead of making up a response.
 
         ## Linking rules

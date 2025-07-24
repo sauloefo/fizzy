@@ -1,12 +1,13 @@
 class Command::Parser::Context
-  attr_reader :user, :url, :script_name
+  attr_reader :user, :url, :script_name, :source_context
 
   MAX_CARDS = 100
 
-  def initialize(user, url:, script_name: "")
+  def initialize(user, url:, script_name: "", source_context: nil)
     @user = user
     @url = url
     @script_name = script_name
+    @source_context = source_context
 
     extract_url_components
   end
@@ -17,6 +18,14 @@ class Command::Parser::Context
 
   def viewing_card_contents?
     viewing_card_perma?
+  end
+
+  def originally_viewing_card_contents?
+    (source_context || self).viewing_card_contents?
+  end
+
+  def original_cards
+    (source_context || self).cards
   end
 
   def viewing_list_of_cards?
@@ -94,6 +103,6 @@ class Command::Parser::Context
       route = Rails.application.routes.recognize_path(path)
       @controller = route[:controller]
       @action = route[:action]
-      @params =  ActionController::Parameters.new(Rack::Utils.parse_nested_query(uri.query).merge(route.except(:controller, :action)))
+      @params = ActionController::Parameters.new(Rack::Utils.parse_nested_query(uri.query).merge(route.except(:controller, :action)))
     end
 end
