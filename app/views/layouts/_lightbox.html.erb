@@ -8,9 +8,9 @@
 
   <div class="lightbox__actions">
     <%= yield %>
-    <button class="btn fill-white" title="Close (esc)" data-action="dialog#close keydown.esc->dialog#close:stop" data-controller="hotkey">
+    <button class="btn fill-white tooltip" data-action="dialog#close keydown.esc->dialog#close:stop" data-controller="hotkey">
       <%= icon_tag "remove" %>
-      <span class="for-screen-reader">Close image viewer (esc)</span>
+      <span class="for-screen-reader">Close (esc)</span>
     </button>
   </div>
 <% end %>

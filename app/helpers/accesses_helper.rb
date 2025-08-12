@@ -18,9 +18,8 @@ module AccessesHelper
     turbo_frame_tag dom_id(collection, :involvement_button) do
       button_to collection_involvement_path(collection), method: :put,
           aria: { labelledby: dom_id(collection, :involvement_label) },
-          class: [ "btn", { "btn--reversed": access.involvement == "watching" || access.involvement == "everything" } ],
-          params: { involvement: next_involvement(access.involvement) },
-          title: involvement_access_label(collection, access.involvement) do
+          class: [ "btn tooltip", { "btn--reversed": access.involvement == "watching" || access.involvement == "everything" } ],
+          params: { involvement: next_involvement(access.involvement) } do
         icon_tag("notification-bell-#{access.involvement.dasherize}") +
           tag.span(involvement_access_label(collection, access.involvement), class: "for-screen-reader", id: dom_id(collection, :involvement_label))
       end
