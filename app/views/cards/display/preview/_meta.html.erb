@@ -4,13 +4,11 @@
   </div>
 
   <span class="card__meta-text card__meta-text--added">
-    <%= icon_tag "add--meta" %>
     <%= local_datetime_tag(card.created_at, style: :daysago) %>
     <% "(Draft)" if card.drafted? %>
   </span>
 
   <span class="card__meta-text card__meta-text--author">
-    <%= icon_tag "arrow-up" %>
     <%= card.creator.familiar_name %>
   </span>
 
