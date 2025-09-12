@@ -1,4 +1,5 @@
 <% @page_title = @user_filtering.selected_collections_label %>
+<% turbo_exempts_page_from_cache %>
 
 <%= render "filters/broadcasts", filter: @filter %>
 
