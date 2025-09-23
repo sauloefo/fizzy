@@ -33,8 +33,8 @@ FileUtils.cp original_dbfile, path, verbose: true
 ActiveRecord::Tenanted::DatabaseTasks.migrate_all
 
 ApplicationRecord.with_tenant(signup.tenant_name) do |tenant|
-  Account.sole.update! queenbee_id: signup.queenbee_account.id
-  User.first.update! signal_user_id: signup.signal_account.owner.id
+  Account.sole.update! external_account: signup.signal_account
+  User.first.update! external_user: signup.signal_account.owner
 
   puts "\n\nLogin to http://launchpad.localhost:3011/ as #{signup.email_address} / #{signup.password}"
 end
