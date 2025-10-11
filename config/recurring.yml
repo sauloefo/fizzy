@@ -26,7 +26,7 @@ production: &production
     command: "SolidQueue::RecurringExecution.clear_in_batches"
     schedule: every hour at minute 52
   cleanup_webhook_deliveries:
-    command: "Webhook::CleanupDeliveriesJob"
+    class: Webhook::CleanupDeliveriesJob
     schedule: every 4 hours
   sqlite_backups:
     class: SQLiteBackupsJob
