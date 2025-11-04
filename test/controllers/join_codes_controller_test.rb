@@ -42,7 +42,7 @@ class JoinCodesControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to session_magic_link_path
-      assert_equal root_url(script_name: "/#{@tenant}"), session[:return_to_after_authenticating]
+      assert_equal landing_url(script_name: "/#{@tenant}"), session[:return_to_after_authenticating]
     end
   end
 
