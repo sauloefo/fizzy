@@ -15,7 +15,7 @@ class JoinCodesController < ApplicationController
       identity.send_magic_link
     end
 
-    session[:return_to_after_authenticating] = root_url(script_name: "/#{tenant}")
+    session[:return_to_after_authenticating] = landing_url(script_name: "/#{tenant}")
     redirect_to session_magic_link_path
   end
 

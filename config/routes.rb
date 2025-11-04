@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :landing
+
   resources :collections do
     scope module: :collections do
       resource :subscriptions
