@@ -20,6 +20,11 @@
         overflow: auto;
         padding: 0;
       }
+
+      /* Adapt the grid to public views (no filters or watchers sections) */
+      &.public #main {
+        grid-template-rows: 1fr;
+      }
     }
   }
 
