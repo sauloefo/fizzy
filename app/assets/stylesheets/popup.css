@@ -48,6 +48,10 @@
   .popup__title {
     font-weight: 800;
     white-space: nowrap;
+
+    &[tabindex="-1"]:focus-visible {
+      outline: unset;
+    }
   }
 
   /* Hide lists when all the items within are hidden */
@@ -155,7 +159,7 @@
     max-inline-size: 100%;
     padding: var(--inline-space-half) var(--popup-item-padding-inline);
     text-align: start;
-    
+
     &:focus-visible {
       z-index: 1;
     }

@@ -17,10 +17,9 @@
     </template>
 
     <%= filter_dialog "Added by…" do %>
-      <strong class="popup__title">Added by…</strong>
-
+      <%= tag.strong "Added by…", class: "popup__title", tabindex: (-1 if platform.mobile?), autofocus: platform.mobile? %>
       <% if user_filtering.users.many? %>
-        <%= text_field_tag nil, nil, id: nil, placeholder: "Filter…", class: "input input--transparent txt-small", autofocus: true,
+        <%= text_field_tag nil, nil, id: nil, placeholder: "Filter…", class: "input input--transparent txt-small", autofocus: !platform.mobile?,
               type: "search", autocorrect: "off", autocomplete: "off", data: { "1p-ignore": "true", filter_target: "input", action: "input->filter#filter" } %>
       <% end %>
 
