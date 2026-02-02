@@ -40,20 +40,41 @@ class ZipFile
 
         writer = Writer.new
 
-        # Use S3's upload_stream directly for write-based streaming.
-        # ActiveStorage's upload method expects a read-based IO, but ZipKit
-        # needs a write-based stream. The TransferManager's upload_stream
-        # yields a writable IO that we can stream directly to.
-        service.send(:upload_stream,
-          key: blob.key,
-          content_type: "application/zip",
-          part_size: 100.megabytes,
-          **service.upload_options
-        ) do |write_stream|
-          write_stream.binmode
-          writer.stream_to(write_stream)
-          yield writer
-          writer.close
+        begin
+          if defined?(Sentry)
+            Sentry.add_breadcrumb(Sentry::Breadcrumb.new(
+              category: "zip_file.upload",
+              message: "Starting S3 multipart upload",
+              data: { blob_key: blob.key, service: service.class.name }
+            ))
+          end
+
+          # Use S3's upload_stream directly for write-based streaming.
+          # ActiveStorage's upload method expects a read-based IO, but ZipKit
+          # needs a write-based stream. The TransferManager's upload_stream
+          # yields a writable IO that we can stream directly to.
+          service.send(:upload_stream,
+            key: blob.key,
+            content_type: "application/zip",
+            part_size: 100.megabytes
+          ) do |write_stream|
+            write_stream.binmode
+            writer.stream_to(write_stream)
+            yield writer
+            writer.close
+          end
+        rescue Aws::S3::MultipartUploadError => e
+          # Add context to help diagnose the issue
+          if defined?(Sentry)
+            Sentry.set_context("zip_file_upload", {
+              blob_key: blob.key,
+              writer_byte_size: writer.byte_size,
+              error_class: e.class.name,
+              error_message: e.message,
+              nested_errors: e.errors.map { |err| { class: err.class.name, message: err.message } }
+            })
+          end
+          raise
         end
 
         blob.update!(byte_size: writer.byte_size, checksum: writer.checksum)
