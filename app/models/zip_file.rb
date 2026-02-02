@@ -40,38 +40,19 @@ class ZipFile
 
         writer = Writer.new
 
-        begin
-          # Use S3's upload_stream directly for write-based streaming.
-          # ActiveStorage's upload method expects a read-based IO, but ZipKit
-          # needs a write-based stream. The TransferManager's upload_stream
-          # yields a writable IO that we can stream directly to.
-          service.send(:upload_stream,
-            key: blob.key,
-            content_type: "application/zip",
-            part_size: 100.megabytes
-          ) do |write_stream|
-            write_stream.binmode
-            writer.stream_to(write_stream)
-            yield writer
-            writer.close
-          end
-        rescue Aws::S3::MultipartUploadError => e
-          if defined?(Sentry)
-            Sentry.set_context("zip_file_upload", {
-              blob_key: blob.key,
-              writer_byte_size: writer.byte_size,
-              error_class: e.class.name,
-              error_message: e.message,
-              nested_errors: e.errors.map do |err|
-                {
-                  class: err.class.name,
-                  message: err.message,
-                  backtrace: err.backtrace&.first(20)
-                }
-              end
-            })
-          end
-          raise
+        # Use S3's upload_stream directly for write-based streaming.
+        # ActiveStorage's upload method expects a read-based IO, but ZipKit
+        # needs a write-based stream. The TransferManager's upload_stream
+        # yields a writable IO that we can stream directly to.
+        service.send(:upload_stream,
+          key: blob.key,
+          content_type: "application/zip",
+          part_size: 100.megabytes
+        ) do |write_stream|
+          write_stream.binmode
+          writer.stream_to(write_stream)
+          yield writer
+          writer.close
         end
 
         blob.update!(byte_size: writer.byte_size, checksum: writer.checksum)
