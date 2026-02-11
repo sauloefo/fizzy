@@ -125,6 +125,7 @@
           &:not(:has(.reaction)) {
             .card__meta-avatars--assignees {
               margin-inline-end: calc(var(--btn-size) + var(--meta-spacer-block));
+              margin-block-start: var(--meta-spacer-block);
             }
           }
         }
@@ -138,6 +139,7 @@
 
           .card__meta-text--assignees {
             margin-inline-end: calc(var(--btn-size) + var(--meta-spacer-block));
+            margin-block-start: calc(var(--meta-spacer-block) * 2);
           }
         }
 
@@ -154,7 +156,6 @@
 
         .card__meta-avatars--assignees {
           margin-inline-start: unset;
-          margin-block-start: calc(var(--meta-spacer-block) * 2);
         }
 
         .card__meta-avatars--author {
